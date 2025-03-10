@@ -4,6 +4,13 @@ import Header from './components/Header';
 import Drawer from './components/Drawer';
 import './App.css';
 
+const arr = [
+  { title: 'Чоловічі кросівки Nike Blazer Mid Suede', price: 4999, imageUrl: '/img/goods/1.jpg' },
+  { title: 'Чоловічі кросівки Nike Air Max 270', price: 6499, imageUrl: '/img/goods/2.jpg' },
+  { title: 'Чоловічі кросівки Nike Blazer Classic', price: 4599, imageUrl: '/img/goods/3.jpg' },
+  { title: 'Чоловічі кросівки Puma X Aka Boku Future Rider', price: 7299, imageUrl: '/img/goods/4.jpg' },
+];
+
 function App() {
   return (
     // кошик з боку
@@ -23,10 +30,11 @@ function App() {
           </div>
 
           <div className='goods'>
-            <Card />
-            <Card />
-            <Card />
-            <Card />
+
+            {arr.map((obj) => (
+              <Card title={obj.title} price={obj.price} imageUrl={obj.imageUrl} />
+            ))}
+
           </div>
 
         </div>
