@@ -1,23 +1,32 @@
 // import logo from './logo.svg';
+import React from 'react';
 import Card from './components/Card';
 import Header from './components/Header';
 import Drawer from './components/Drawer';
 import './App.css';
 
-const arr = [
-  { title: 'Чоловічі кросівки Nike Blazer Mid Suede', price: 4999, imageUrl: '/img/goods/1.jpg' },
-  { title: 'Чоловічі кросівки Nike Air Max 270', price: 6499, imageUrl: '/img/goods/2.jpg' },
-  { title: 'Чоловічі кросівки Nike Blazer Classic', price: 4599, imageUrl: '/img/goods/3.jpg' },
-  { title: 'Чоловічі кросівки Puma X Aka Boku Future Rider', price: 7299, imageUrl: '/img/goods/4.jpg' },
-];
-
 function App() {
+  const [items, setItems] = React.useState([])
+  const [cartItems, setCartItems] = React.useState([])
+  const [cartOpened, setCartOpened] = React.useState(false);
+
+  //запит на отримання items на бекенді 
+  React.useEffect(() => {
+    fetch('https://67c1c9a361d8935867e44681.mockapi.io/items').then(res => {
+      return res.json();
+    })
+    .then((json) => {
+      setItems(json);
+    })
+  })
+
+
   return (
-    // кошик з боку
+    // кошик з боку 
     <div className="wrapper clear">
 
-      <Drawer />
-      <Header />
+      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} />}
+      <Header onClickCart={() => setCartOpened(true)} />
 
       <main>
         <div className="content p-40">
@@ -31,8 +40,14 @@ function App() {
 
           <div className='goods'>
 
-            {arr.map((obj) => (
-              <Card title={obj.title} price={obj.price} imageUrl={obj.imageUrl} />
+            {items.map((obj) => (
+              <Card 
+                title={obj.title} 
+                price={obj.price} 
+                imageUrl={obj.imageUrl} 
+                onClickPlus={() => console.log('Додали до кошика')} 
+                onClickFavorite={() => console.log('Додали до улюбленого')} 
+              />
             ))}
 
           </div>
