@@ -169,17 +169,13 @@ header{
       padding: 5px;
       margin-bottom: 20px;
 
-      .cart-img{
-        margin-right: 20px;
-        margin-bottom: 10px;
-        // height: 770px;
-        // width: 70px;
-        // background-size: contain;
-        // background-position: 0 10px;
-        // background-repeat: no-repeat;
-        // margin-right: 20px;
-
-      }
+        .cart-img{
+          margin-right: 20px;
+          margin-bottom: 10px;
+          width: 130px;
+          height: 70px;
+          background-size: cover;
+        }
       .cart-alias-goods{
         margin-bottom: 5px;
         font-size: 16px;
