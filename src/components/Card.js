@@ -38,20 +38,28 @@
 
 // export default Card;
 
+
 import React from 'react';
 
-function Card({title, imageUrl, price, onClickFavorite, onClickPlus}) {
+function Card({id, title, imageUrl, price, onClickFavorite, onClickPlus, favorited = false}) {
     const [isAdded, setIsAdded] = React.useState(false);
+    const [isFavorite, setIsFavorite] = React.useState(favorited);
     
     const handleClick = () => {
         onClickPlus({title, imageUrl, price}, isAdded); // Передаємо isAdded як другий аргумент
         setIsAdded(!isAdded);
     };
 
+    const HandleFavoriteClick = () => {
+        onClickFavorite({id, title, imageUrl, price})
+         setIsFavorite(!isFavorite);
+    }
+
     return (
         <div className="card">
-            <div className="favorite" onClick={onClickFavorite}>
-                <img src="/img/heart-unlike.svg" alt="unliked" />
+            <div className="favorite" onClick={HandleFavoriteClick}>
+                <img src={isFavorite ? "/img/isFavorite.svg" : "/img/heart-unlike.svg"}  alt="favorite" />
+                
             </div>
 
             <img width={133} height={112} src={imageUrl} alt="sneakers" />
@@ -73,3 +81,4 @@ function Card({title, imageUrl, price, onClickFavorite, onClickPlus}) {
 }
 
 export default Card;
+
