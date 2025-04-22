@@ -157,9 +157,20 @@ header{
   box-shadow: -10px 4px 24px rgba(0, 0, 0, 0.01);
   padding: 30px;
 
+  .drawer-container{
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+
+  }
+
   .greenButtonEmpty {
       width: 245px;
       margin-top: 20px;
+
+    
 
       &:hover {
         img {
@@ -203,8 +214,6 @@ header{
     
   }
 
-    
-
     .cart-item{
       display: flex;
       align-items: center;
@@ -246,6 +255,8 @@ header{
       }
     }
 
+
+
     .cart-total-block{
 
       ul{ 
@@ -275,6 +286,14 @@ header{
       .green-button{
         position: relative;
         // transition: transform 0.2s ease-in-out;
+        // &:disabled{
+        //   background-color: #bebebe !important;
+        //   cursor: default;
+        // }
+          &:disabled {
+        animation: button-loading 0.8s ease-in-out infinite;
+      }
+
         &:hover{
           img{
             transform: translateX(5px);
@@ -316,4 +335,23 @@ header{
 // background: color.scale($color, $lightness: -8.4717607973%),
 // color.adjust($color, $lightness: -5%);
   }
+
+
+  &:disabled{
+    background-color: #bebebe;
+    cursor: default;
+  }
 }
+
+    @keyframes button-loading {
+      0% {
+        opacity: 1;
+      }
+      50% {
+        opacity: 0.7;
+      }
+      100% {
+        opacity: 1;
+      }
+
+    }

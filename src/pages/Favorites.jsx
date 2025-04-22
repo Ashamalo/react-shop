@@ -1,6 +1,11 @@
+import React from 'react';
 import Card from '../components/Card';
+import AppContext from '../context';
 
-function Favorites({ items, onAddToFavorite }) {
+function Favorites({ onAddToFavorite }) {
+  const {favorites} = React.useContext(AppContext);
+
+  // console.log(state);
     return (
         <div className="content p-40">
           <div className="d-flex align-center mb-40 justify-between">
@@ -9,10 +14,10 @@ function Favorites({ items, onAddToFavorite }) {
 
           <div className='goods'>
 
-             {items.map((item, index) => (
+             {favorites.map((item, index) => (
                <Card 
                key={index} // Додайте унікальний key для кожного елемента
-               id={item.id}
+              //  id={item.id}
               //  title={item.title} 
               //  price={item.price} 
               //  imageUrl={item.imageUrl}   
@@ -22,10 +27,8 @@ function Favorites({ items, onAddToFavorite }) {
                  {...item}
               //  onClickPlus={(obj, isAdded) => onAddToCart(obj, isAdded)}
              />
-            ))}           
-
+            ))}
           </div>
-
         </div>
     )
 }

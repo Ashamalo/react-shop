@@ -1,5 +1,6 @@
 import React from 'react';
 import ContentLoader from "react-content-loader";
+import AppContext from '../context';
 
 function Card({
     id,
@@ -9,15 +10,18 @@ function Card({
     onClickFavorite,
     onClickPlus,
     favorited = false,
-    added = false,
+    // added = false,
     loading = false // Виправлено з "Loading" на "loading" (регістр має значення)
 }) {
-    const [isAdded, setIsAdded] = React.useState(added);
+    // const [isAdded, setIsAdded] = React.useState(added);
+    const { isItemAdded } = React.useContext(AppContext);
     const [isFavorite, setIsFavorite] = React.useState(favorited);
+
+    console.log(title, isItemAdded(id));
     
     const handleClick = () => {
-        onClickPlus({id, title, imageUrl, price}, isAdded);
-        setIsAdded(!isAdded);
+        onClickPlus({id, title, imageUrl, price});
+        // setIsAdded(!isAdded);
     };
 
     const HandleFavoriteClick = () => {
@@ -57,7 +61,7 @@ function Card({
                         <img 
                             className="plus" 
                             onClick={handleClick} 
-                            src={isAdded ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} 
+                            src={isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} 
                             alt="add to cart"
                         />
                     </div>
