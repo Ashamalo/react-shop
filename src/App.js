@@ -44,13 +44,15 @@ function App() {
 
   const onAddToCart = async (obj) => {
     try {
-      if (cartItems.find((item) => Number(item.parentId) === Number(obj.id))) {
-        setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
-        await axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
+      const findItem = cartItems.find((item) => Number(item.parentId) === Number(obj.id));
+      if (findItem) {
+        setCartItems(prev => prev.filter((item) => Number(item.parentId) !== Number(obj.id)));
+        await axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${findItem.id}`);
         
       } else {
-        setCartItems((prev) => [...prev, obj]);
-        await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
+        
+        const { data } = await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
+        setCartItems((prev) => [...prev, data]);
         
       }
     }
@@ -63,7 +65,7 @@ function App() {
   const onRemoveItem = (id) => {
     try {
       axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`);
-      setCartItems((prev) => prev.filter((item) => item.id !== id));
+      setCartItems((prev) => prev.filter((item) => Number(item.id) !== Number(id)));
     } catch (error) {
       alert('Помилка при видаленні з кошику');
       console.error(error);
@@ -75,7 +77,7 @@ function App() {
     try {
           if (favorites.find((favObj) => Number(favObj.id) === Number(obj.id))) {
             axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/favorites/${obj.id}`);
-            setFavorites((prev) => prev.filter((item) => item.id !== obj.id));
+            setFavorites((prev) => prev.filter((item) => Number(item.id) !== Number(obj.id)));
           } else {
             const { data } = await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/favorites', obj);
               setFavorites((prev) => [...prev, data]);
