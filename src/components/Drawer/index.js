@@ -1,15 +1,21 @@
 import React from "react";
 import axios from "axios";
-import AppContext from "../context";
-import Info from "./Info";
+
+import styles from './Drawer.module.scss';
+
+import Info from "../Info";
+import { useCart } from "../../hooks/useCart";
 
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-function Drawer({ onClose, onRemove, items = [] }) {
-    const { cartItems, setCartItems } = React.useContext(AppContext);
+function Drawer({ onClose, onRemove, items = [], opened }) {
+    // const { cartItems, setCartItems } = React.useContext(AppContext);
+    const { cartItems, setCartItems, totalPrice } = useCart();
     const [orderId, setOrderId] = React.useState(null);
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
+
+    // const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
 
     const onClickOrder = async () => {
         try {
@@ -36,8 +42,8 @@ function Drawer({ onClose, onRemove, items = [] }) {
 
 
     return (
-        <div className='overlay'>
-            <div className='drawer'>
+        <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
+            <div className={styles.drawer}>
                 <h2 className="d-flex justify-between">Кошик 
                     <img onClick={onClose} className="cart-item-remove-btn" src="/img/btn-remove.svg" alt="remove" />
                 </h2>
@@ -58,13 +64,14 @@ function Drawer({ onClose, onRemove, items = [] }) {
                                     </div>
 
                                     <img 
-                                        onClick={() => {
-                                            if (obj.id) {
-                                                onRemove(obj.id);
-                                            } else {
-                                                console.error('Cannot remove: item has no id', obj);
-                                            }
-                                        }} 
+                                        // onClick={() => {
+                                        //     if (obj.id) {
+                                        //         onRemove(obj.id);
+                                        //     } else {
+                                        //         console.error('Cannot remove: item has no id', obj);
+                                        //     }
+                                        // }} 
+                                        onClick={() => onRemove(obj.id)}
                                         className="cart-item-remove-btn" 
                                         src="/img/btn-remove.svg" 
                                         alt="remove" 
@@ -77,12 +84,12 @@ function Drawer({ onClose, onRemove, items = [] }) {
                                 <li>
                                     <span>Разом:</span>
                                     <div></div>
-                                    <b>4999 грн.</b>
+                                    <b>{totalPrice} грн.</b>
                                 </li>
                                 <li>
                                     <span>Податок 20%:</span>
                                     <div></div>
-                                    <b>999,8 грн.</b>
+                                    <b>{(totalPrice * 0.2).toFixed(2)} грн.</b>
                                 </li>
                             </ul>
                             <button disabled={isLoading} onClick={onClickOrder} className="green-button">Оформити замовлення<img src="/img/arrow.svg" alt='arrow' /></button>

@@ -10,12 +10,12 @@ function Card({
     onClickFavorite,
     onClickPlus,
     favorited = false,
-    // added = false,
-    loading = false // Виправлено з "Loading" на "loading" (регістр має значення)
+    loading = false
 }) {
     // const [isAdded, setIsAdded] = React.useState(added);
     const { isItemAdded } = React.useContext(AppContext);
     const [isFavorite, setIsFavorite] = React.useState(favorited);
+    // const Obj = { id, title, imageUrl, price };
 
     console.log(title, isItemAdded(id));
     
@@ -47,9 +47,9 @@ function Card({
                 </ContentLoader>
             ) : (
                 <>
-                    <div className="favorite" onClick={HandleFavoriteClick}>
+                    {onClickFavorite && (<div className="favorite" onClick={HandleFavoriteClick}>
                         <img src={isFavorite ? "/img/isFavorite.svg" : "/img/heart-unlike.svg"} alt="favorite" />
-                    </div>
+                    </div>)}
 
                     <img width="100%" height={135} src={imageUrl} alt="sneakers" />
                     <h5>{title}</h5>
@@ -57,13 +57,14 @@ function Card({
                         <div className='d-flex flex-column'>
                             <span>Ціна: </span>
                             <b>{price} грн.</b>
-                        </div>
-                        <img 
-                            className="plus" 
-                            onClick={handleClick} 
-                            src={isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"} 
-                            alt="add to cart"
-                        />
+                            </div>
+                            {onClickPlus && (
+                                <img
+                                    className="plus"
+                                    onClick={handleClick}
+                                    src={isItemAdded(id) ? "/img/btn-checked.svg" : "/img/btn-plus.svg"}
+                                    alt="add to cart"
+                                />)}
                     </div>
                 </>
             )}

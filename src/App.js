@@ -5,12 +5,11 @@ import { Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 
 import Header from './components/Header';
-import Drawer from './components/Drawer';
+import Drawer from './components/Drawer/index';
 import Home from './pages/Home';
 import Favorites from './pages/Favorites';
-// import './App.css';
 import AppContext from './context';
-// export const AppContext = React.createContext({});
+import Orders from './pages/Orders';
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -20,22 +19,7 @@ function App() {
   const [favorites, setFavorites] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
 
-//   React.useEffect(() => {
-//     async function fetchData() {
-//       setIsLoading(true);
-//       const cartResponse = await axios.get('https://67c1c9a361d8935867e44681.mockapi.io/cart');
-//       const favoritesResponse = await axios.get('https://67c1c9a361d8935867e44681.mockapi.io/favorites');
-//       const itemsResponse = await axios.get('https://67c1c9a361d8935867e44681.mockapi.io/items');
 
-//       setIsLoading(false);
-    
-//       setCartItems(cartResponse.data);
-//       setFavorites(favoritesResponse.data);
-//       setItems(itemsResponse.data); // Виправлено - передаємо тільки дані
-//     }
-
-//   fetchData(); // Викликаємо функцію один раз при монтуванні
-// }, []);
   React.useEffect(() => {
     async function fetchData() {
       try {
@@ -50,46 +34,63 @@ function App() {
         setFavorites(favoritesResponse.data);
         setItems(itemsResponse.data);
       } catch (error) {
-        alert('Ошибка при запросе данных ;(');
+        alert('Помилка при запиті даних ;(');
         console.error(error);
       }
     }
 
     fetchData();
   }, []);
-  //запит на отримання items на бекенді 
 
-  // const onAddToCart = (obj) => {
-  // // Додаємо timestamp як тимчасовий id, якщо його немає
-  // const itemToAdd = obj.id ? obj : {...obj, id: Date.now()};
-  
-  // axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', itemToAdd)
-  //   .then(res => {
-  //     setCartItems(prev => [...prev, res.data]); // Використовуємо об'єкт з сервера (де вже буде id)
-  //   });
-  // };
-  function onAddToCart(obj) {
-    if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-      axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
-      setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
-    } else {
-      axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
-      setCartItems((prev) => [...prev, obj]);
+  const onAddToCart = async (obj) => {
+    try {
+      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+        setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+        await axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
+        
+      } else {
+        setCartItems((prev) => [...prev, obj]);
+        await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
+        
+      }
+    }
+    catch (error) {
+      alert('Не вдалося додати товар у кошик')
+      console.error(error);
     }
   }
 
+  // function onAddToCart(obj) {
+  //   if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+  //     axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
+  //     setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
+  //   } else {
+  //     axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
+  //     setCartItems((prev) => [...prev, obj]);
+  //   }
+  // }
+
   const onRemoveItem = (id) => {
-  if (!id) {
-    console.error('Cannot remove item: id is undefined');
-    return;
-  }
-  axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`)
-    .then(() => {
-      setCartItems((prev) => prev.filter(item => item.id !== id));
-    })
-    .catch(error => {
-      console.error('Error removing item:', error);
-    });
+    try {
+      axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`);
+      setCartItems((prev) => prev.filter((item) => item.id !== id));
+    } catch (error) {
+      alert('Помилка при видаленні з кошику');
+      console.error(error);
+    }
+
+
+  // if (!id) {
+  //   console.error('Cannot remove item: id is undefined');
+  //   return;
+  // }
+  // axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`)
+  //   .then(() => {
+  //     setCartItems((prev) => prev.filter((item) => item.id !== id));
+  //   })
+  //   .catch(error => {
+  //     console.error('Error removing item:', error);
+  //   });
 };
  
   const onAddToFavorite = async (obj) => {
@@ -104,6 +105,7 @@ function App() {
     }
     catch (error) {
       alert('Не вдалось додати у закладинки')
+      console.error(error);
     }
 
   };
@@ -117,10 +119,29 @@ function App() {
   }
   
   return (
-    <AppContext.Provider value={{items, cartItems, favorites, isItemAdded, onAddToFavorite, setCartOpened, setCartItems}}>
+    <AppContext.Provider value={{
+      items,
+      cartItems,
+      favorites,
+      isItemAdded,
+      onAddToFavorite,
+      onAddToCart,
+      setCartOpened,
+      setCartItems
+    }}>
       <div className="wrapper clear">
-
-      {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />}
+        <Drawer
+          items={cartItems}
+          onClose={() => setCartOpened(false)}
+          onRemove={onRemoveItem}
+          opened={cartOpened} />
+        {/* <div>
+          <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />
+        </div> */}
+        {/* {cartOpened && (
+          <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />
+        )} */}
+        
       <Header onClickCart={() => setCartOpened(true)} />
       
       <Routes>
@@ -148,6 +169,15 @@ function App() {
             <Favorites onAddToFavorite={onAddToFavorite} />
           } 
         />
+        </Routes>
+        
+        <Routes>
+        <Route 
+          path="/orders" 
+          element={
+            <Orders />
+          } 
+        />
       </Routes>
 
     </div>
@@ -157,4 +187,3 @@ function App() {
 }
 
 export default App;
-
