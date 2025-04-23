@@ -44,7 +44,7 @@ function App() {
 
   const onAddToCart = async (obj) => {
     try {
-      if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
+      if (cartItems.find((item) => Number(item.parentId) === Number(obj.id))) {
         setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
         await axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
         
@@ -60,16 +60,6 @@ function App() {
     }
   }
 
-  // function onAddToCart(obj) {
-  //   if (cartItems.find((item) => Number(item.id) === Number(obj.id))) {
-  //     axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${obj.id}`);
-  //     setCartItems(prev => prev.filter(item => Number(item.id) !== Number(obj.id)));
-  //   } else {
-  //     axios.post('https://67c1c9a361d8935867e44681.mockapi.io/cart', obj);
-  //     setCartItems((prev) => [...prev, obj]);
-  //   }
-  // }
-
   const onRemoveItem = (id) => {
     try {
       axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`);
@@ -79,18 +69,6 @@ function App() {
       console.error(error);
     }
 
-
-  // if (!id) {
-  //   console.error('Cannot remove item: id is undefined');
-  //   return;
-  // }
-  // axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${id}`)
-  //   .then(() => {
-  //     setCartItems((prev) => prev.filter((item) => item.id !== id));
-  //   })
-  //   .catch(error => {
-  //     console.error('Error removing item:', error);
-  //   });
 };
  
   const onAddToFavorite = async (obj) => {
@@ -115,7 +93,7 @@ function App() {
   };
 
   const isItemAdded = (id) => {
-    return cartItems.some((obj) => Number(obj.id) === Number(id));
+    return cartItems.some((obj) => Number(obj.parentId) === Number(id));
   }
   
   return (
@@ -135,12 +113,6 @@ function App() {
           onClose={() => setCartOpened(false)}
           onRemove={onRemoveItem}
           opened={cartOpened} />
-        {/* <div>
-          <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />
-        </div> */}
-        {/* {cartOpened && (
-          <Drawer items={cartItems} onClose={() => setCartOpened(false)} onRemove={onRemoveItem} />
-        )} */}
         
       <Header onClickCart={() => setCartOpened(true)} />
       
