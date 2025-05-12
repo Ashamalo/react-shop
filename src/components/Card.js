@@ -51,7 +51,7 @@ function Card({
                         <img src={isFavorite ? "/img/isFavorite.svg" : "/img/heart-unlike.svg"} alt="favorite" />
                     </div>)}
 
-                    <img width="100%" height={135} src={imageUrl} alt="sneakers" />
+                    <img width="100%" height={250} src={imageUrl} alt="watches" />
                     <h5>{title}</h5>
                     <div className='d-flex justify-between align-center'>
                         <div className='d-flex flex-column'>

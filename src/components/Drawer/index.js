@@ -97,7 +97,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                     </div>
                 ) : (
                     <Info
-                    title={isOrderComplete ? "Замовлення оформлене" : "Корзина порожня"}  
+                    title={isOrderComplete ? "Замовлення оформлене" : "Кошик порожній"}  
                         description={isOrderComplete ? `Ваше замовлення #${orderId} незабаром буде опрацьовано` : "Додайте хоча б одну одиницю товару, щоб зробити замовлення"}
                         image={isOrderComplete ? "/img/complete-order.svg" : "/img/empty-cart-image.svg"}    
                     />

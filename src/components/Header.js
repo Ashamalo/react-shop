@@ -12,10 +12,10 @@ function Header(props) {
             <Link to="/">
                 <div className="d-flex align-center">
                 
-                <img width={40} height={40} src="/img/logo.svg" alt='logo' />
+                <img width={70} height={70} src="/img/logo-2.png" alt='logo' />
                 <div>
-                    <h3>Airfit sneakers</h3>
-                    <p className='header-title'>Магазин найкращіх кросівок</p>
+                    <h3>The watch</h3>
+                    <p className='header-title'>Магазин лімітованих версій годинників</p>
                 </div>
             </div>
             </Link>

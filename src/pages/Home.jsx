@@ -34,7 +34,7 @@ function Home({
     return (
         <div className="content p-40">
           <div className="d-flex align-center mb-40 justify-between">
-            <h1>{searchValue ? `Пошук по запиту: "${searchValue}"` : 'Усі кросівки'}</h1>
+            <h1>{searchValue ? `Пошук по запиту: "${searchValue}"` : 'Усі годинники'}</h1>
             {/* //реалізація поля пошуку товару */}
             <div className="search-block">
               <img src="/img/search.svg" alt="search" />
