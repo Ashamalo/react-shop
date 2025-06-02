@@ -10,6 +10,9 @@ import Home from './pages/Home';
 import Favorites from './pages/Favorites';
 import AppContext from './context';
 import Orders from './pages/Orders';
+import Footer from './components/Footer';
+import Contacts from './pages/Contacts';
+import PrivacyPolicy from './pages/PrivacyPolicy';
 
 function App() {
   const [items, setItems] = React.useState([]);
@@ -161,9 +164,21 @@ function App() {
             <Orders />
           } 
         />
-      </Routes>
+        </Routes>
 
-    </div>
+        <Routes>
+        <Route 
+            path="/contacts"
+            element={<Contacts />} />
+          <Route
+            path="/privacy-policy"
+            element={<PrivacyPolicy />} />  
+
+        </Routes>
+        
+      <Footer />
+      </div>
+      
     </AppContext.Provider>
     
   );

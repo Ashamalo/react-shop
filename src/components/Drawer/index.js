@@ -9,37 +9,65 @@ import { useCart } from "../../hooks/useCart";
 const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 function Drawer({ onClose, onRemove, items = [], opened }) {
-    // const { cartItems, setCartItems } = React.useContext(AppContext);
+
     const { cartItems, setCartItems, totalPrice } = useCart();
     const [orderId, setOrderId] = React.useState(null);
     const [isOrderComplete, setIsOrderComplete] = React.useState(false);
     const [isLoading, setIsLoading] = React.useState(false);
 
-    // const totalPrice = cartItems.reduce((sum, obj) => obj.price + sum, 0);
+    // const onClickOrder = async () => {
+    //     try {
+    //         setIsLoading(true);
+    //         const { data } = await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/orders', {
+    //             items: cartItems,
+    //         });
+            
+    //         setOrderId(data.id);
+    //         setIsOrderComplete(true);
+    //         setCartItems([]);
+           
+    //         for (let i = 0; i < cartItems.length; i++) {
+    //             const item = cartItems[i];
+    //             await axios.delete('https://67c1c9a361d8935867e44681.mockapi.io/cart' + item.id);
+    //             await delay(1000);
+    //         }
+
+    //     } catch (error) {
+    //         alert('Не вдалося створити замовлення :(');
+    //         // console.log('Не вдалося створити замовлення :(');
+    //     }
+    //     setIsLoading(false);
+    // };
 
     const onClickOrder = async () => {
         try {
             setIsLoading(true);
+            
+            // Зберігаємо копію товарів ДО очищення кошика
+            const itemsToDelete = [...cartItems];
+            
+            // 1. Створюємо замовлення
             const { data } = await axios.post('https://67c1c9a361d8935867e44681.mockapi.io/orders', {
                 items: cartItems,
             });
             
+            // 2. Оновлюємо стан (очищаємо кошик)
             setOrderId(data.id);
             setIsOrderComplete(true);
             setCartItems([]);
-           
-            for (let i = 0; i < cartItems.length; i++) {
-                const item = cartItems[i];
-                await axios.delete('https://67c1c9a361d8935867e44681.mockapi.io/cart' + item.id);
-                await delay(1000);
-            }
-
+            await delay(10000);
+            // 3. Видаляємо товари з серверного кошика (використовуючи ЗБЕРЕЖЕНУ копію)
+                await Promise.all(
+                itemsToDelete.map(item => 
+                    axios.delete(`https://67c1c9a361d8935867e44681.mockapi.io/cart/${item.id}`)
+                )
+            );
+            
         } catch (error) {
             alert('Не вдалося створити замовлення :(');
         }
         setIsLoading(false);
     };
-
 
     return (
         <div className={`${styles.overlay} ${opened ? styles.overlayVisible : ''}`}>
@@ -52,7 +80,7 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                     <div className="drawer-container">
                         <div className="items"> 
                             {items.map((obj) => (
-                                <div key={obj.id} className="cart-item"> {/* Використовуємо obj.id замість index */}
+                                <div key={obj.id} className="cart-item">
                                     <div 
                                         style={{ backgroundImage: `url(${obj.imageUrl})` }} 
                                         className="cart-img">
@@ -64,13 +92,6 @@ function Drawer({ onClose, onRemove, items = [], opened }) {
                                     </div>
 
                                     <img 
-                                        // onClick={() => {
-                                        //     if (obj.id) {
-                                        //         onRemove(obj.id);
-                                        //     } else {
-                                        //         console.error('Cannot remove: item has no id', obj);
-                                        //     }
-                                        // }} 
                                         onClick={() => onRemove(obj.id)}
                                         className="cart-item-remove-btn" 
                                         src="/img/btn-remove.svg" 

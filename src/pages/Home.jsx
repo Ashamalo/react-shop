@@ -10,9 +10,7 @@ function Home({
     onAddToFavorite,
     onAddToCart,
     isLoading
-    // cartItems = []
 }) {
-    // const { isItemAdded } = React.useContext(AppContext);
     const renderItems = () => {
         const filtredItems = items.filter((item) =>
         item.title.toLowerCase().includes(searchValue.toLowerCase()),
@@ -22,10 +20,7 @@ function Home({
             key={index}
             onClickFavorite={(obj) => onAddToFavorite(obj)}
             onClickPlus={(obj) => onAddToCart(obj)}
-            // added={isItemAdded(item && item.id)}
             loading={isLoading}
-            
-            // added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
             {...item}
         />
         ));
@@ -52,24 +47,6 @@ function Home({
 
             <div className='goods'>
                 {renderItems()}
-
-            {/* {items.filter((item) => item.title.toLowerCase().includes(searchValue.toLocaleLowerCase())).map((item, index) => (
-               <Card
-                    key={index} // Додайте унікальний key для кожного елемента
-                    id={item.id}
-                    title={item.title}
-                    price={item.price}
-                    imageUrl={item.imageUrl}
-                    onClickFavorite={(obj) => onAddToFavorite (obj)}
-                    onClickPlus={(obj, isAdded) => onAddToCart(obj, isAdded)}
-                    added={cartItems.some((obj) => Number(obj.id) === Number(item.id))}
-                    loading={false}
-                // added
-                    {...items}
-                    />
-            ))} */}
-            
-
           </div>
 
         </div>
