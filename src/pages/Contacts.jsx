@@ -52,8 +52,7 @@ function Contacts() {
     try {
       // Форматуємо телефон для відправки: видаляємо всі нецифрові символи і додаємо +38
       const phoneForSubmit = `+38${formData.phone.replace(/\D/g, '')}`;
-      
-      // Відправляємо дані на сервер
+
       await axios.post(
         'https://67c1c9a361d8935867e44681.mockapi.io/feedback',
         {
@@ -86,7 +85,7 @@ function Contacts() {
       </div>
       
       <div className="contact-info">
-        <p><strong>Телефон:</strong> <a href="tel:+380123456789">+380 (12) 345-67-89</a></p>
+        <p><strong>Телефон:</strong> <a href="tel:+380123456789">+380 (93) 345-47-45</a></p>
         <p><strong>Email:</strong> <a href="mailto:info@thewatch.com">info@thewatch.com</a></p>
         <p><strong>Адреса:</strong> м. Київ, вул. Шовковична, 42-44</p>
         <p><strong>Години роботи:</strong> Пн-Пт: 10:00-20:00, Сб-Нд: 11:00-18:00</p>

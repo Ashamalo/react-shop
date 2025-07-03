@@ -17,17 +17,13 @@ body {
 *{
   font-family: "Inter", sans-serif;
 }
-// code {
-//   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-//     monospace;
-// }
+
 .wrapper{
 max-width: 1280px;
 margin: 50px auto;
 background: #FFFFFF;
 box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.04);
 border-radius: 20px;
-
 }
 
 header{
@@ -56,7 +52,6 @@ header{
       opacity: .5;
     }
  }
-
 
  .card{
   border: 1px solid #dadcdd;
@@ -281,8 +276,7 @@ header{
       }
 
     }   
-  
- 
+   
  .green-button{
   width: 100%;
   height: 55px;
@@ -326,19 +320,18 @@ header{
 
     }
 
-    /* Стилі для футера */
 .footer {
   padding: 40px;
-  border-top: 1px solid #dadcdd; /* Сіра верхня межа */
-  margin-top: auto; /* Автоматичний відступ зверху */
+  border-top: 1px solid #dadcdd; 
+  margin-top: auto; 
   
   &-content {
     margin-bottom: 30px;
-    flex-wrap: wrap; /* Гнучке перенесення елементів */
+    flex-wrap: wrap; 
   }
   
   &-logo {
-    flex: 0 0 30%; /* Займає 30% ширини */
+    flex: 0 0 30%; 
     margin-bottom: 20px;
     
     h3 {
@@ -347,17 +340,17 @@ header{
   }
   
   &-title {
-    opacity: 0.7; /* Напівпрозорий текст */
+    opacity: 0.7; 
     font-size: 14px;
     margin-top: 5px;
   }
   
   &-links {
-    flex: 0 0 40%; /* Займає 40% ширини */
-    justify-content: space-around; /* Рівномірний розподіл */
+    flex: 0 0 40%; 
+    justify-content: space-around; 
     
     ul {
-      list-style: none; /* Видаляє маркери списку */
+      list-style: none; 
       padding: 0;
       margin: 0 20px;
       
@@ -365,14 +358,14 @@ header{
         margin-bottom: 12px;
         
         a {
-          text-decoration: none; /* Без підкреслення */
+          text-decoration: none; 
           color: #000;
           opacity: 0.7;
-          transition: opacity 0.2s ease-in-out; /* Плавна зміна прозорості */
+          transition: opacity 0.2s ease-in-out; 
           
           &:hover {
             opacity: 1;
-            text-decoration: underline; /* Підкреслення при наведенні */
+            text-decoration: underline; 
           }
         }
       }
@@ -380,16 +373,16 @@ header{
   }
   
   &-social {
-    flex: 0 0 20%; /* Займає 20% ширини */
+    flex: 0 0 20%; 
     
     h4 {
       margin-bottom: 15px;
-      font-weight: 600; /* Напівжирний шрифт */
+      font-weight: 600;
     }
     
     .social-icons {
       display: flex;
-      gap: 15px; /* Відступ між іконками */
+      gap: 15px; 
       
       a {
         opacity: 0.6;
@@ -405,17 +398,16 @@ header{
   &-copyright {
     text-align: center;
     padding-top: 20px;
-    border-top: 1px solid #f0f0f0; /* Світла верхня межа */
+    border-top: 1px solid #f0f0f0; 
     opacity: 0.6;
     font-size: 14px;
   }
 }
 
-/* Забезпечуємо, щоб обгортка використовувала колонку flex */
 .wrapper {
   display: flex;
-  flex-direction: column; /* Вертикальне розташування */
-  min-height: 100vh; /* Мінімальна висота на весь екран */
+  flex-direction: column; 
+  min-height: 100vh; 
 }
 
 .border {
@@ -715,9 +707,7 @@ header{
   border: 1px solid #f8d7da;
   color: #842029;
 }
-/* Інші стилі залишаються без змін */
 
-/* Анімація для кнопки */
 @keyframes button-loading {
   0% { opacity: 1; }
   50% { opacity: 0.7; }
@@ -730,28 +720,27 @@ header{
   cursor: not-allowed;
 }
 
-/* Адаптивність для мобільних пристроїв */
 @media (max-width: 768px) {
   .footer {
-    padding: 30px 20px; /* Зменшуємо відступи */
+    padding: 30px 20px; 
     
     &-content {
-      flex-direction: column; /* Вертикальне розташування */
+      flex-direction: column; 
     }
     
     &-logo,
     &-links,
     &-social {
-      flex: 0 0 100%; /* Повна ширина */
+      flex: 0 0 100%; 
       width: 100%;
       margin-bottom: 30px;
     }
     
     &-links {
-      flex-wrap: wrap; /* Перенос елементів */
+      flex-wrap: wrap; 
       
       ul {
-        flex: 0 0 45%; /* Майже половина ширини */
+        flex: 0 0 45%; 
         margin-bottom: 20px;
       }
     }

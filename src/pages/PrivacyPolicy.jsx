@@ -1,4 +1,3 @@
-// pages/PrivacyPolicy.jsx
 import React from 'react';
 
 function PrivacyPolicy() {

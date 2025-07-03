@@ -19,7 +19,6 @@ function Header(props) {
                 </div>
             </div>
             </Link>
-            
 
             <ul className="d-flex">
                 <li onClick={props.onClickCart} className="cart-img">
